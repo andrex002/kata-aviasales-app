@@ -45,7 +45,6 @@
     ]
   },
   "devDependencies": {
-    "typescript-plugin-css-modules": "^5.0.2",
     "@babel/eslint-parser": "^7.22.15",
     "eslint": "^8.52.0",
     "eslint-config-airbnb": "^19.0.4",
@@ -65,7 +64,7 @@
     }
   },
   "lint-staged": {
-    "*.js": [
+    "*.tsx": [
       "npm run lint:fix",
       "npm run format",
       "git add"
