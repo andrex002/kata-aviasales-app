@@ -1,6 +1,5 @@
-// import React from 'react';
-import { NumberTransfersFilter } from '../numberTransfersFilter/numberTransfersFilter';
-import { Tabs } from '../tabs/tabs';
+import NumberTransfersFilter from '../numberTransfersFilter/numberTransfersFilter';
+import Tabs from '../tabs/tabs';
 import { Tickets } from '../tickets/tickets';
 
 import style from './app.module.scss';
