@@ -1,9 +1,13 @@
 .tickets {
   padding: 20px 0 50px;
-}
 
-.tickets__list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__download-message {
+    text-align: center;
+  }
 }
