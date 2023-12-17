@@ -1,10 +1,4 @@
-export type filterState = {
-  all: boolean;
-  noTransfers: boolean;
-  oneTransfers: boolean;
-  twoTransfers: boolean;
-  threeTransfers: boolean;
-};
+export type filterState = { filters: string[] };
 
 export enum tabsState {
   CHEAP = 'CHEAP',

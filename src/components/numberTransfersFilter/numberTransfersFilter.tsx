@@ -1,37 +1,20 @@
 import { connect, ConnectedProps } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import {
-  setAllTransfers,
-  setNoTransfers,
-  setOneTransfers,
-  setTwoTransfers,
-  setThreeTransfers,
-} from '../../store/action';
-import { State, filterState } from '../../types/state';
+import { setFilter } from '../../store/action';
+import { State } from '../../types/state';
+import { filtersType } from '../../types/actions';
 
 import style from './numberTransfersFilter.module.scss';
 
 const mapStateToProps = (state: State) => {
-  return { statusFilters: state.filterReducer };
+  return { statusFilters: state.filterReducer.filters, aFilters: state.filterReducer.filters };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
-    onSetAllTransfers() {
-      dispatch(setAllTransfers());
-    },
-    onSetNoTransfers() {
-      dispatch(setNoTransfers());
-    },
-    onSetOneTransfers() {
-      dispatch(setOneTransfers());
-    },
-    onSetTwoTransfers() {
-      dispatch(setTwoTransfers());
-    },
-    onSetThreeTransfers() {
-      dispatch(setThreeTransfers());
+    onSetFilter(filters: filtersType) {
+      dispatch(setFilter(filters));
     },
   };
 };
@@ -40,41 +23,52 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type NumberTransfersFilterProps = PropsFromRedux;
 
-function NumberTransfersFilter({
-  statusFilters,
-  onSetAllTransfers,
-  onSetNoTransfers,
-  onSetOneTransfers,
-  onSetTwoTransfers,
-  onSetThreeTransfers,
-}: NumberTransfersFilterProps) {
+function NumberTransfersFilter({ statusFilters, aFilters, onSetFilter }: NumberTransfersFilterProps) {
   const filters = [
     {
       type: 'all',
       name: 'Все',
-      action: onSetAllTransfers,
     },
     {
       type: 'noTransfers',
       name: 'Без пересадок',
-      action: onSetNoTransfers,
     },
     {
       type: 'oneTransfers',
       name: '1 пересадка',
-      action: onSetOneTransfers,
     },
     {
       type: 'twoTransfers',
       name: '2 пересадки',
-      action: onSetTwoTransfers,
     },
     {
       type: 'threeTransfers',
       name: '3 пересадки',
-      action: onSetThreeTransfers,
     },
   ];
+
+  let arrFilters = aFilters;
+
+  const toggleFilter = (filter: string) => {
+    if (filter === 'all') {
+      if (arrFilters.includes(filter)) {
+        arrFilters = [];
+      } else {
+        arrFilters = ['all', 'noTransfers', 'oneTransfers', 'twoTransfers', 'threeTransfers'];
+      }
+    } else {
+      if (arrFilters.includes(filter)) {
+        arrFilters = arrFilters.filter((item: string) => item !== filter);
+        arrFilters = arrFilters.filter((item: string) => item !== 'all');
+      } else {
+        arrFilters = [...arrFilters, filter];
+        if (arrFilters.length === 4) {
+          arrFilters.push('all');
+        }
+      }
+    }
+    onSetFilter(arrFilters);
+  };
 
   const filterItems = filters.map((filter) => {
     return (
@@ -82,8 +76,8 @@ function NumberTransfersFilter({
         <input
           className={`visually-hidden ${style['number-transfer-filter__input']}`}
           type="checkbox"
-          checked={statusFilters[filter.type as keyof filterState]}
-          onChange={filter.action}
+          checked={statusFilters.includes(filter.type)}
+          onChange={() => toggleFilter(filter.type)}
         />
         <span className={style['number-transfer-filter__checkbox']} />
         {filter.name}

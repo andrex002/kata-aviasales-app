@@ -1,5 +1,7 @@
 import { TicketState } from './state';
 
+export type filtersType = string[];
+
 export type setNumberTransfersAction = {
   type: string;
 };

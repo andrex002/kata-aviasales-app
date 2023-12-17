@@ -2,34 +2,13 @@ import { Dispatch } from 'redux';
 
 import { getTickets } from '../services/aviasalesServises';
 import { ticketsData } from '../types/state';
+import { filtersType } from '../types/actions';
 
-export const setAllTransfers = () => {
+export const setFilter = (arrFilter: filtersType) => {
+  console.log(arrFilter);
   return {
-    type: 'ALL',
-  };
-};
-
-export const setNoTransfers = () => {
-  return {
-    type: 'NO_TRANSFERS',
-  };
-};
-
-export const setOneTransfers = () => {
-  return {
-    type: 'ONE_TRANSFERS',
-  };
-};
-
-export const setTwoTransfers = () => {
-  return {
-    type: 'TWO_TRANSFERS',
-  };
-};
-
-export const setThreeTransfers = () => {
-  return {
-    type: 'THREE_TRANSFERS',
+    type: 'FILTERING',
+    payload: arrFilter,
   };
 };
 
